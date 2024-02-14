@@ -173,16 +173,86 @@ function find(value) {
     }
 }
 
+function levelOrder(root) {
+    const queue = [];
+    queue.push(root);
+    while (queue.length !== 0) {
+             
+        const temp = queue.shift();
+        console.log(temp.data);
+ 
+        if (temp.left !== null) {
+            queue.push(temp.left);
+        }
+ 
+        if (temp.right !== null) {
+            queue.push(temp.right);
+        }
+    }
+}
+
+function inOrder(root) {
+    if(root === null){
+        return;
+    }    
+
+    inOrder(root.left)
+
+    console.log(root.data)
+
+    inOrder(root.right)
+}
+
+function preOrder(root) {
+    if (root === null){
+        return
+    }
+
+    console.log(root.data)
+
+    preOrder(root.left)
+
+    preOrder(root.right)
+}
+
+function postOrder(root) {
+    if (root === null) {
+        return
+    }
+
+    postOrder(root.left)
+
+    postOrder(root.right)
+
+    console.log(root.data)
+}
+
+function height(root) {
+    let counter = 0
+
+    while (root !== null) {
+        console.log(counter)
+        
+        if (temp.left !== null) {
+            queue.push(temp.left);
+        }
+ 
+        if (temp.right !== null) {
+            queue.push(temp.right);
+        }
+    }
+}
+
 const test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 
 const sortedArray = sorted(test)
 
 const treeX = new Tree(buildTree(sortedArray))
 
-insert(1989)
-insert(2)
+// insert(1989)
+// insert(2)
 insert(25)
-find(23)
+height(treeX.root)
 // console.log(sortedArray)
 prettyPrint(treeX.root)
 // console.log(treeX.root)
