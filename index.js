@@ -59,17 +59,11 @@ function buildTree(array) {
         return array.length === 1 ? new Node(array[0]) : null;
     }
 
-
     const mid = Math.floor(array.length / 2)
     const root = new Node(array[mid])
 
     root.left = buildTree(array.slice(0, mid))
     root.right = buildTree(array.slice(mid + 1))
-
-
-    // console.log(array.slice(0, mid))
-    // console.log(array.slice(mid))
-
 
     return root
 }
@@ -160,14 +154,14 @@ function find(value) {
     const tree = treeX
     let root = tree.root;
 
-    while(value !== root.data){
-        if(value > root.data) {
+    while (value !== root.data) {
+        if (value > root.data) {
             root = root.right
         }
-        if(value < root.data){
+        if (value < root.data) {
             root = root.left
         }
-        if(value === root.data){
+        if (value === root.data) {
             return console.log("finding", root)
         }
     }
@@ -177,14 +171,14 @@ function levelOrder(root) {
     const queue = [];
     queue.push(root);
     while (queue.length !== 0) {
-             
+
         const temp = queue.shift();
         console.log(temp.data);
- 
+
         if (temp.left !== null) {
             queue.push(temp.left);
         }
- 
+
         if (temp.right !== null) {
             queue.push(temp.right);
         }
@@ -192,9 +186,9 @@ function levelOrder(root) {
 }
 
 function inOrder(root) {
-    if(root === null){
+    if (root === null) {
         return;
-    }    
+    }
 
     inOrder(root.left)
 
@@ -204,7 +198,7 @@ function inOrder(root) {
 }
 
 function preOrder(root) {
-    if (root === null){
+    if (root === null) {
         return
     }
 
@@ -228,19 +222,53 @@ function postOrder(root) {
 }
 
 function height(root) {
-    let counter = 0
+    if (root === null) return 0
 
-    while (root !== null) {
-        console.log(counter)
-        
-        if (temp.left !== null) {
-            queue.push(temp.left);
-        }
- 
-        if (temp.right !== null) {
-            queue.push(temp.right);
-        }
+    let leftHeight = height(root.left)
+    let rightHeight = height(root.right)
+
+    return leftHeight > rightHeight ? ++leftHeight : ++rightHeight
+}
+
+function depth(root, node) {
+    if (root === null) return -1
+
+    let dist = -1
+
+    if ((root.data === node) || (dist = depth(root.left, node)) >= 0 || (dist = depth(root.right, node)) >= 0) {
+        return dist + 1
     }
+
+    return dist
+}
+
+function isBalanced(root) {
+    if (height(root.left) > height(root.right) + 1 || height(root.left) > height(root.right) - 1 || height(root.left) === height(root.right)) {
+        return console.log("true")
+    }
+
+    return console.log("false")
+}
+
+function rebalance(root) {
+    const sortedArray = [];
+    inOrderTraversal(root, sortedArray);
+
+    root = buildTree(sortedArray);
+
+    return root;
+
+}
+
+function inOrderTraversal(root, array) {
+
+    if (root === null) {
+        return;
+    }
+
+    inOrderTraversal(root.left, array);
+    array.push(root.data);
+    inOrderTraversal(root.right, array);
 }
 
 const test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -249,10 +277,12 @@ const sortedArray = sorted(test)
 
 const treeX = new Tree(buildTree(sortedArray))
 
-// insert(1989)
-// insert(2)
+insert(1989)
+insert(1999)
+insert(2)
+insert(6)
 insert(25)
-height(treeX.root)
+const reba = rebalance(treeX.root)
 // console.log(sortedArray)
-prettyPrint(treeX.root)
+prettyPrint(reba)
 // console.log(treeX.root)
